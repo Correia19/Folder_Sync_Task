@@ -1,11 +1,2 @@
-2024-11-08 16:03:33,372 - File copied/updated: .\original\New Text Document.txt -> .\replica\New Text Document.txt
-2024-11-08 16:03:53,376 - Backup directory created: .\replica\New folder
-2024-11-08 16:04:03,379 - Backup directory created: .\replica\New folder\New folder\New folder
-2024-11-08 16:04:03,381 - Backup directory created: .\replica\New folder\New folder\New folder (2)
-2024-11-08 16:04:03,383 - Backup directory created: .\replica\New folder\New folder\New folder (3)
-2024-11-08 16:04:13,388 - File copied/updated: .\original\New folder\New folder\New folder (2)\New folder\New Text Document.txt -> .\replica\New folder\New folder\New folder (2)\New folder\New Text Document.txt
-2024-11-08 16:04:13,390 - Backup directory created: .\replica\New folder\New folder\New folder (2)\New folder (2)
-2024-11-08 16:04:23,395 - File copied/updated: .\original\New folder\New folder\New folder (2)\New folder\testing mesh.txt -> .\replica\New folder\New folder\New folder (2)\New folder\testing mesh.txt
-2024-11-08 16:04:23,395 - File.removed: .\replica\New folder\New folder\New folder (2)\New folder\New Text Document.txt
-2024-11-08 16:04:53,408 - File.removed: .\replica\New Text Document.txt
-2024-11-08 16:05:03,411 - Backup directory removed: .\replica\New folder
+2024-11-08 15:14:10,073 - File copied/updated: .\original\1st_layer_textFile.txt -> .\replica\1st_layer_textFile.txt
+2024-11-08 15:14:10,076 - Backup directory created: .\replica\testfolder
