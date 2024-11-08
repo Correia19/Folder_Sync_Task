@@ -4,23 +4,36 @@ import shutil
 import argparse
 import logging
 
+# Command to run the script:
+# 'python.exe .\folder_sync.py .\original\ .\replica\ 30 .\logs\log_file.log'
+# Arguments:
+# 1st - Path to the source/original folder
+# 2nd - Path to the replica folder that will mirror the source folder
+# 3rd - Time interval (in seconds) between each synchronization
+# 4th - Path to the log file where operations are recorded
+
+# A separate file is available with code to test this script.
+
 def loggingConfig(log_file):
     log_format = "%(asctime)s - %(message)s"
-    #to prevent duplicate logging when running multiple times
-    for handler in logging.root.handlers[:]:
-        logging.root.removeHandler(handler)
-
-    #logging config to log on console and on file
+    
     logging.basicConfig(level=logging.INFO, format=log_format)
     file_handler = logging.FileHandler(log_file)
     file_handler.setLevel(logging.INFO)
-    file_handler.setFormatter(logging.Formatter)
     file_handler.setFormatter(logging.Formatter(log_format))
     logging.getLogger().addHandler(file_handler)
 
 
 def sync_folders(source, replica, log_file):
     #Code to create or update files on replica by comparing to original
+    if not os.path.exists(source):
+        logging.error("Source folder doesn't exist")
+        return
+
+    if not os.path.exists(replica):
+        os.mkdir(replica)
+        logging.info(f"Replica folder created: {replica}")
+
     for item in os.listdir(source):
         source_path = os.path.join(source, item)
         replica_path = os.path.join(replica, item)
@@ -50,10 +63,7 @@ def sync_folders(source, replica, log_file):
                 os.remove(replica_path)
                 logging.info(f"File.removed: {replica_path}")
 
-
-
 def main ():
-
     # Argument parsing
     parser = argparse.ArgumentParser(description="Folder Synchronization Tool")
     parser.add_argument("source", help="Source folder path")
