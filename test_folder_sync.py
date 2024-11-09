@@ -66,7 +66,6 @@ def test_sync_process(setup_folders):
     with open(log_file, "r") as f:
         logs = f.read()
         
-    time.sleep(10)
     #Confirms the replica folder was created
     assert "Replica folder created" in logs
     
@@ -96,3 +95,36 @@ def test_sync_process(setup_folders):
     #Confirms the file was deleted in the replicated folder
     assert not os.path.exists(replica_file_path)
         
+def test_nested_directories_sync(setup_folders):
+    source, replica, log_file = setup_folders
+    nested_dir_path = os.path.join(source, "nested_dir")
+    nested_file_path = os.path.join(nested_dir_path, "nested_file.txt")
+    
+    # Create nested folder and a file within it
+    os.makedirs(nested_dir_path, exist_ok=True)
+    with open(nested_file_path, "w") as f:
+        f.write("Nested file content")
+
+    # Syncing and verifying if the folder and file exist in the replica
+    sync_folders(source, replica, log_file)
+    assert os.path.exists(os.path.join(replica, "nested_dir"))
+    assert os.path.exists(os.path.join(replica, "nested_dir", "nested_file.txt"))
+
+    # Check the content of the file in the replica
+    with open(os.path.join(replica, "nested_dir", "nested_file.txt"), "r") as f:
+        content = f.read()
+    assert content == "Nested file content"
+    
+def test_large_file_sync(setup_folders):
+    source, replica, log_file = setup_folders
+    large_file_path = os.path.join(source, "large_file.txt")
+    
+    # Create a file with 100 MB
+    with open(large_file_path, "wb") as f:
+        f.write(b"0" * 1024 * 1024 * 100)
+
+    # Sync and check if the file was created and has the right size
+    sync_folders(source, replica, log_file)
+    replica_file_path = os.path.join(replica, "large_file.txt")
+    assert os.path.exists(replica_file_path)
+    assert os.path.getsize(replica_file_path) == os.path.getsize(large_file_path)
